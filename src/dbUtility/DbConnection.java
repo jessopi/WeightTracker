@@ -6,11 +6,6 @@ import java.sql.SQLException;
 
 public class DbConnection {
 
-    private static final String USERNAME = "dbuser";
-    private static final String PASSWORD = "dbpassword";
-
-    private static final String CONN = "jbdc::mysql://localhost/login";
-
     private static final String SQCONN = "jdbc:sqlite:trackWeight.sqlite";
 
     public static Connection getConnection() throws SQLException {
@@ -22,6 +17,5 @@ public class DbConnection {
         }
         return null;
     }
-
 
 }

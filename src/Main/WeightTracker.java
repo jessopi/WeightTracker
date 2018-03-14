@@ -10,11 +10,12 @@ public class WeightTracker extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = (Parent) FXMLLoader.load(getClass().getResource("WeightTracker.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("WeightTracker.fxml"));
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Weight Tracker Application");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
