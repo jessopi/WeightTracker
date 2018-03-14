@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import java.time.LocalDate;
 
 public class WeightTrackerController {
 
@@ -31,7 +30,7 @@ public class WeightTrackerController {
         if(id.equals(addButton.getId())){
            if(isValidEntry()){
                System.out.println("addButton clicked");
-               //pass into modelViewController for push to sqlDatabase.
+               weightTrackerModel.insertNewData(dateEntry.getValue(),Double.parseDouble(weightEntry.getText()));
            } else {
                System.out.println("Invalid data Entry");
            }
