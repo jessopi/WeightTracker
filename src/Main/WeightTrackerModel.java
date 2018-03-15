@@ -25,8 +25,34 @@ public class WeightTrackerModel {
       }
     }
 
-    public void setSearchRange(String startingDate,String endingDate){
+
+    public void removeQuery(String removalDate){
+        String sqlRemoval = "DELETE FROM weightOverTime WHERE Date= '" + removalDate + "'";
+        removeData(sqlRemoval);
+    }
+
+    private void removeData(String sqlRemoval){
+        try{
+            Connection conn = DbConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sqlRemoval);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void searchQuery(){
+        String sqlInsert = "SELECT * FROM weightOverTime";
+        setSearchRange(sqlInsert);
+    }
+
+    public void searchQuery(String startingDate,String endingDate){
         String sqlInsert = "SELECT * FROM weightOverTime WHERE Date BETWEEN '" + startingDate + "' AND '" + endingDate +"'";
+        setSearchRange(sqlInsert);
+    }
+
+    private void setSearchRange(String sqlInsert){
         try{
             Connection conn = DbConnection.getConnection();
             this.weightDataList = FXCollections.observableArrayList();
@@ -35,14 +61,12 @@ public class WeightTrackerModel {
                 String d1 = rs.getString(1);
                 this.weightDataList.add(new WeightData(d1,rs.getDouble(2)));
             }
+
+            rs.close();
+            conn.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
-
-        for(WeightData item : weightDataList){
-            System.out.println(item);
-        }
-
     }
 
     public void insertNewData(String date, Double weight){
@@ -53,14 +77,14 @@ public class WeightTrackerModel {
             PreparedStatement stmt = conn.prepareStatement(sqlInsert);
             stmt.setString(1,date);
             stmt.setDouble(2,weight);
-            stmt.execute();
+            stmt.executeUpdate();
+
             stmt.close();
+            conn.close();
 
       } catch(SQLException ex) {
           ex.printStackTrace();
       }
-
-
     }
 
     public ObservableList<WeightData> getWeightDataList() {
