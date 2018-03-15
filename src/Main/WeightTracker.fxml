@@ -57,10 +57,10 @@
                      <children>
                         <LineChart fx:id="weightChart" animated="false" layoutX="14.0" layoutY="14.0" legendVisible="false" prefHeight="434.0" prefWidth="995.0" title="Weight over Time" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                           <xAxis>
-                            <CategoryAxis animated="false" side="BOTTOM" />
+                            <CategoryAxis animated="false" label="Date" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis label="Weight (lbs)" side="LEFT" />
                           </yAxis>
                         </LineChart>
                      </children></AnchorPane>

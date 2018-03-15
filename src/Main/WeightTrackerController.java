@@ -38,7 +38,6 @@ public class WeightTrackerController {
             things to do:
                 seperate code logic a bit more
                 Test linegraph with 100s of data entries to make sure it works properly (JUNIT)
-                Add labels to X & Y axis
                 add functionality to load all data with click of button
                 ability to delete entries/remove all?
                 Add information on additional tab - info about current set of data
