@@ -19,7 +19,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.WeightTrackerController">
    <children>
-      <TabPane layoutX="-45.0" layoutY="63.0" prefHeight="513.0" prefWidth="1024.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="63.0">
+      <TabPane layoutX="-45.0" layoutY="80.0" prefHeight="496.0" prefWidth="1024.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
         <tabs>
           <Tab text="Graph">
             <content>
@@ -80,7 +80,7 @@
                   <DatePicker fx:id="dateRemovalField" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" promptText="MM/DD/YYYY" />
                </children>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="1024.0">
@@ -105,7 +105,7 @@
                      </HBox.margin></Button>
                </children>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" />
+                  <Insets bottom="10.0" left="5.0" right="5.0" />
                </VBox.margin>
             </HBox>
          </children>

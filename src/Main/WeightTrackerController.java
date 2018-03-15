@@ -46,12 +46,10 @@ public class WeightTrackerController {
     private Button removeByDateButton;
     /*
             things to do:
-                seperate code logic a bit more
-                ability to delete entries/remove all?
+                ability to remove all?
                 Add information on additional tab - info about current set of data
-                have a status bar representing current databse connection.
-
      */
+
     public void click(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
@@ -76,6 +74,7 @@ public class WeightTrackerController {
             updateLineChart();
         } else if (id.equals(removeAllButton.getId())){
             //questionable if this should be added
+            this.weightTrackerModel.removeQuery();
         }
     }
 

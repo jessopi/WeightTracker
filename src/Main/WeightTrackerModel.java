@@ -25,7 +25,10 @@ public class WeightTrackerModel {
       }
     }
 
-
+    public void removeQuery(){
+        String sqlRemoval = "DELETE FROM weightOverTime";
+        removeData(sqlRemoval);
+    }
     public void removeQuery(String removalDate){
         String sqlRemoval = "DELETE FROM weightOverTime WHERE Date= '" + removalDate + "'";
         removeData(sqlRemoval);
