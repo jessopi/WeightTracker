@@ -54,7 +54,6 @@ public class WeightTrackerModel {
         }
     }
 
-    //data not sorted by date when pulled only by order added
     public void setSearchRange(String startingDate,String endingDate){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -63,11 +62,11 @@ public class WeightTrackerModel {
         try{
             conn = DbConnection.getConnection();
             if(startingDate.isEmpty() || endingDate.isEmpty()){
-                sqlStatement = "SELECT * FROM weightOverTime WHERE User= ?";
+                sqlStatement = "SELECT * FROM weightOverTime WHERE User= ? ORDER BY Date ASC";
                 stmt = conn.prepareStatement(sqlStatement);
                 stmt.setString(1,UserInfo.getCurrentUser());
             } else {
-                sqlStatement = "SELECT * FROM weightOverTime WHERE Date BETWEEN ? AND ? AND User= ?";
+                sqlStatement = "SELECT * FROM weightOverTime WHERE Date BETWEEN ? AND ? AND User= ? ORDER BY Date ASC";
                 stmt = conn.prepareStatement(sqlStatement);
                 stmt.setString(1,startingDate);
                 stmt.setString(2,endingDate);

@@ -72,10 +72,15 @@
                      <HBox.margin>
                         <Insets right="2.5" />
                      </HBox.margin></TextField>
-                  <Label fx:id="entryFieldError" prefHeight="25.0" prefWidth="108.0" />
+                  <Label fx:id="entryFieldError" prefHeight="25.0" prefWidth="108.0" textFill="RED" />
+                  <Label fx:id="removalFieldError" prefHeight="25.0" prefWidth="108.0" textFill="RED">
+                     <HBox.margin>
+                        <Insets left="135.0" />
+                     </HBox.margin>
+                  </Label>
                 <Button fx:id="removeByDateButton" maxWidth="105.0" minWidth="105.0" mnemonicParsing="false" onAction="#click" prefWidth="105.0" text="Remove by Date">
                      <HBox.margin>
-                        <Insets left="235.0" right="2.5" />
+                        <Insets right="2.5" />
                      </HBox.margin></Button>
                   <DatePicker fx:id="dateRemovalField" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" promptText="MM/DD/YYYY" />
                </children>
@@ -94,7 +99,7 @@
                      <HBox.margin>
                         <Insets right="2.5" />
                      </HBox.margin></DatePicker>
-                  <Label fx:id="searchFieldError" prefHeight="25.0" prefWidth="108.0" />
+                  <Label fx:id="searchFieldError" prefHeight="25.0" prefWidth="108.0" textFill="RED" />
                 <Button fx:id="removeAllButton" maxWidth="105.0" minWidth="105.0" mnemonicParsing="false" onAction="#click" prefWidth="105.0" text="Remove All">
                      <HBox.margin>
                         <Insets left="235.0" />

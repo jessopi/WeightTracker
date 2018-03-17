@@ -17,6 +17,8 @@ public class WeightTrackerController {
     @FXML
     private Label searchFieldError;
     @FXML
+    private Label removalFieldError;
+    @FXML
     private DatePicker dateEntry;
     @FXML
     private Button addButton;
@@ -95,6 +97,7 @@ public class WeightTrackerController {
 
     private boolean isValidSearch(){
         if(startingDateSearch.getValue() == null || endingDateSearch.getValue() == null ||endingDateSearch.getValue().isBefore(startingDateSearch.getValue())){
+            searchFieldError.setText("Invalid Search Entry");
             return false;
         } else {
             searchFieldError.setText("");
@@ -105,10 +108,10 @@ public class WeightTrackerController {
 
         try {
             if(Double.parseDouble(weightEntry.getText()) < 0 ||  dateEntry.getValue() == null){
-                throw new IllegalArgumentException("Illegal values entered");
+                throw new IllegalArgumentException("Invalid Input Entry");
             }
         } catch(IllegalArgumentException ex) {
-            entryFieldError.setText("Invalid data entered");
+            entryFieldError.setText("Invalid Input Entry");
             return false;
         }
         searchFieldError.setText("");
@@ -116,8 +119,10 @@ public class WeightTrackerController {
     }
     private boolean isValidRemoval(){
         if(dateRemovalField.getValue() == null){
+            removalFieldError.setText("Invalid Date Entry");
             return false;
         } else {
+            removalFieldError.setText("");
             return true;
         }
     }
