@@ -3,14 +3,12 @@ package Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class WeightTrackerController {
 
-    private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
 
     @FXML
     private TextField weightEntry;
@@ -44,15 +42,18 @@ public class WeightTrackerController {
     private Button removeAllButton;
     @FXML
     private Button removeByDateButton;
+
+    private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
     /*
             things to do:
-                ability to remove all?
                 Add information on additional tab - info about current set of data
+                class to calculate data
      */
 
     public void click(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
+
 
         if (id.equals(addButton.getId())) {
             if (isValidEntry()) {
@@ -60,21 +61,21 @@ public class WeightTrackerController {
             }
         } else if (id.equals(searchButton.getId())) {
             if (isValidSearch()) {
-                this.weightTrackerModel.searchQuery(this.startingDateSearch.getValue().toString(),this.endingDateSearch.getValue().toString());
+                this.weightTrackerModel.setSearchRange(this.startingDateSearch.getValue().toString(),this.endingDateSearch.getValue().toString());
                 updateTable();
                 updateLineChart();
             }
         } else if (id.equals(removeByDateButton.getId())) {
             if(isValidRemoval()){
-                this.weightTrackerModel.removeQuery(dateRemovalField.getValue().toString());
+                this.weightTrackerModel.removeData(dateRemovalField.getValue().toString());
             }
         } else if (id.equals(loadButton.getId())) {
-            this.weightTrackerModel.searchQuery();
+            this.weightTrackerModel.setSearchRange("","");
             updateTable();
             updateLineChart();
         } else if (id.equals(removeAllButton.getId())){
             //questionable if this should be added
-            this.weightTrackerModel.removeQuery();
+            this.weightTrackerModel.removeData("");
         }
     }
 
@@ -91,19 +92,17 @@ public class WeightTrackerController {
         }
         this.weightChart.getData().add(series);
     }
+
     private boolean isValidSearch(){
-        try{
-            if(startingDateSearch.getValue() == null || endingDateSearch.getValue() == null ||endingDateSearch.getValue().isBefore(startingDateSearch.getValue())){
-                throw new IllegalArgumentException("Illegal values entered");
-            }
-        } catch (IllegalArgumentException ex) {
-            searchFieldError.setText("Invalid data entered");
+        if(startingDateSearch.getValue() == null || endingDateSearch.getValue() == null ||endingDateSearch.getValue().isBefore(startingDateSearch.getValue())){
             return false;
+        } else {
+            searchFieldError.setText("");
+            return true;
         }
-        searchFieldError.setText("");
-        return true;
     }
     private boolean isValidEntry(){
+
         try {
             if(Double.parseDouble(weightEntry.getText()) < 0 ||  dateEntry.getValue() == null){
                 throw new IllegalArgumentException("Illegal values entered");
@@ -116,14 +115,10 @@ public class WeightTrackerController {
         return true;
     }
     private boolean isValidRemoval(){
-        try{
-            //&& !contains(dataRemovalField.getValue.to_String())
-            if(dateRemovalField.getValue() == null){
-                throw new IllegalArgumentException("Illegal value");
-            }
-        }catch (IllegalArgumentException ex){
+        if(dateRemovalField.getValue() == null){
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 }
