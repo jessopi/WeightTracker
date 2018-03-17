@@ -21,7 +21,7 @@ public class LoginModel {
             System.exit(1);
         }
     }
-    
+
     public void createAccount(String username,String password){
         String hashed = BCrypt.hashpw(password,BCrypt.gensalt());
         PreparedStatement statement = null;

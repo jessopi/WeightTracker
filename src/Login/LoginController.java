@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import userUtility.UserInfo;
 
 public class LoginController {
 
@@ -16,9 +17,12 @@ public class LoginController {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button createButton;
 
     private LoginModel loginModel = new LoginModel();
-
     public void click(javafx.event.ActionEvent event) {
        Button btn = (Button)event.getSource();
        String id = btn.getId();
@@ -27,15 +31,16 @@ public class LoginController {
            return;
        }
 
-       if(id.equals("loginButton")){
+       if(id.equals(this.loginButton.getId())){
            if(this.loginModel.searchForUser(this.usernameField.getText(),this.passwordField.getText())){
+               UserInfo.setCurrentUser(this.usernameField.getText().trim().toLowerCase());
                Stage stage = (Stage)this.infoLabel.getScene().getWindow();
                stage.close();
                login();
            } else {
                infoLabel.setText("Invalid username or password.");
            }
-       } else if (id.equals("createButton")){
+       } else if (id.equals(this.createButton.getId())){
            if(!this.loginModel.searchForUser(this.usernameField.getText())){
                this.loginModel.createAccount(this.usernameField.getText(),this.passwordField.getText());
                infoLabel.setText("           Account created.");
@@ -50,9 +55,9 @@ public class LoginController {
             Stage weightTracker = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Pane root = loader.load(getClass().getResource("/Main/WeightTracker.fxml"));
-            root.setUserData(this.usernameField.getText());
             Scene scene = new Scene(root);
             weightTracker.setScene(scene);
+            weightTracker.setTitle("Weight Tracker Application");
             weightTracker.show();
         } catch (Exception ex){
             ex.printStackTrace();
