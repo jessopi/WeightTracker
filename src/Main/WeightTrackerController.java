@@ -6,6 +6,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class WeightTrackerController {
 
@@ -45,14 +46,14 @@ public class WeightTrackerController {
     private Button removeByDateButton;
     /*
             things to do:
-                ability to remove all?
                 Add information on additional tab - info about current set of data
      */
 
     public void click(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
-
+        Stage stage = (Stage)this.removeAllButton.getScene().getWindow();
+        System.out.println(stage.getScene().getRoot().getUserData());
         if (id.equals(addButton.getId())) {
             if (isValidEntry()) {
                 weightTrackerModel.insertNewData(dateEntry.getValue().toString(), Double.parseDouble(weightEntry.getText()));
@@ -116,7 +117,6 @@ public class WeightTrackerController {
     }
     private boolean isValidRemoval(){
         try{
-            //&& !contains(dataRemovalField.getValue.to_String())
             if(dateRemovalField.getValue() == null){
                 throw new IllegalArgumentException("Illegal value");
             }

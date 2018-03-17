@@ -1,6 +1,7 @@
 package Login;
 
 import dbUtility.DbConnection;
+import org.mindrot.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,32 +21,14 @@ public class LoginModel {
             System.exit(1);
         }
     }
-
-
-    public boolean queryForUser(String username){
-
-        String sqlQuery = "SELECT * FROM LoginInformation WHERE Username= '" + username + "'";
-        return searchForUser(sqlQuery);
-    }
-
-    public boolean queryForUser(String username, String password){
-
-        String sqlQuery = "SELECT * FROM LoginInformation WHERE Username= '" + username + "' AND Password= '" + password +"'";
-        return searchForUser(sqlQuery);
-    }
-
-
-    /*
-        Passwords should not be stored in plainText. need to use encrpytion (Salt?)
-        hashing passwords before store and hashing entered passwords for comparisions.
-
-     */
+    
     public void createAccount(String username,String password){
-        String sqlQuery = "INSERT INTO LoginInformation(Username,Password) VALUES ('" + username +"','" + password +"')";
-
+        String hashed = BCrypt.hashpw(password,BCrypt.gensalt());
         PreparedStatement statement = null;
         try{
-            statement = this.connection.prepareStatement(sqlQuery);
+            statement = this.connection.prepareStatement("INSERT INTO LoginInformation(Username,Password) VALUES (?,?)");
+            statement.setString(1,username.trim().toLowerCase());
+            statement.setString(2,hashed);
             statement.executeUpdate();
 
         } catch(SQLException ex) {
@@ -54,15 +37,34 @@ public class LoginModel {
             try{statement.close(); } catch (SQLException e) {}
            }
     }
-
-
-    private boolean searchForUser(String query)  {
+    public boolean searchForUser(String username)  {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try{
-            statement = this.connection.prepareStatement(query);
+            statement = this.connection.prepareStatement("SELECT * FROM LoginInformation WHERE Username= ?");
+            statement.setString(1,username.trim().toLowerCase());
             resultSet = statement.executeQuery();
             if(resultSet.next()){
+                return true;
+            } else {
+                return false;
+            }
+        } catch(SQLException ex){
+            return false;
+        } finally {
+            try{statement.close(); } catch (SQLException e) {}
+            try{resultSet.close(); } catch (SQLException e) {}
+        }
+    }
+
+    public boolean searchForUser(String username, String password)  {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try{
+            statement = this.connection.prepareStatement("SELECT * FROM LoginInformation WHERE Username= ?");
+            statement.setString(1,username.trim().toLowerCase());
+            resultSet = statement.executeQuery();
+            if(resultSet.next() && BCrypt.checkpw(password,resultSet.getString(2))){
                 return true;
             } else {
                 return false;
