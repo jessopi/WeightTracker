@@ -3,17 +3,19 @@ package Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class WeightTrackerController {
 
-    private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
 
     @FXML
     private TextField weightEntry;
+    @FXML
+    private Label entryFieldError;
+    @FXML
+    private Label searchFieldError;
     @FXML
     private DatePicker dateEntry;
     @FXML
@@ -32,41 +34,52 @@ public class WeightTrackerController {
     private TableColumn<WeightData,Double> weightCol;
     @FXML
     private LineChart<?,?> weightChart;
+    @FXML
+    private DatePicker dateRemovalField;
+    @FXML
+    private Button loadButton;
+    @FXML
+    private Button removeAllButton;
+    @FXML
+    private Button removeByDateButton;
 
-
+    private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
     /*
             things to do:
-                seperate code logic a bit more
-                Test linegraph with 100s of data entries to make sure it works properly (JUNIT)
-                add functionality to load all data with click of button
-                ability to delete entries/remove all?
                 Add information on additional tab - info about current set of data
-                have a status bar representing current databse connection.
-
+                class to calculate data
      */
-    public void click(ActionEvent event){
+
+    public void click(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
-        if(id.equals(addButton.getId())){
-           if(isValidEntry()){
-               System.out.println("addButton clicked");
-               weightTrackerModel.insertNewData(dateEntry.getValue().toString(),Double.parseDouble(weightEntry.getText()));
-           } else {
-               System.out.println("Invalid data Entry");
-           }
-        } else if(id.equals(searchButton.getId())){
-            if(isValidSearch()){
-                System.out.println("searchButton clicked");
+
+
+        if (id.equals(addButton.getId())) {
+            if (isValidEntry()) {
+                weightTrackerModel.insertNewData(dateEntry.getValue().toString(), Double.parseDouble(weightEntry.getText()));
+            }
+        } else if (id.equals(searchButton.getId())) {
+            if (isValidSearch()) {
+                this.weightTrackerModel.setSearchRange(this.startingDateSearch.getValue().toString(),this.endingDateSearch.getValue().toString());
                 updateTable();
                 updateLineChart();
-            } else {
-                System.out.println("Invalid data Search");
             }
+        } else if (id.equals(removeByDateButton.getId())) {
+            if(isValidRemoval()){
+                this.weightTrackerModel.removeData(dateRemovalField.getValue().toString());
+            }
+        } else if (id.equals(loadButton.getId())) {
+            this.weightTrackerModel.setSearchRange("","");
+            updateTable();
+            updateLineChart();
+        } else if (id.equals(removeAllButton.getId())){
+            //questionable if this should be added
+            this.weightTrackerModel.removeData("");
         }
     }
 
     private void updateTable(){
-        this.weightTrackerModel.setSearchRange(this.startingDateSearch.getValue().toString(),this.endingDateSearch.getValue().toString());
         this.dateCol.setCellValueFactory(new PropertyValueFactory<>("Date"));
         this.weightCol.setCellValueFactory(new PropertyValueFactory<>("weight"));
         this.dataTable.setItems(this.weightTrackerModel.getWeightDataList());
@@ -74,32 +87,38 @@ public class WeightTrackerController {
     private void updateLineChart(){
         this.weightChart.getData().clear();
         XYChart.Series series = new XYChart.Series();
-        NumberAxis yAxis = (NumberAxis)this.weightChart.getYAxis();
-        yAxis.setForceZeroInRange(false);
         for(WeightData item : this.weightTrackerModel.getWeightDataList()){
             series.getData().add(new XYChart.Data(item.getDate(),item.getWeight()));
         }
         this.weightChart.getData().add(series);
     }
+
     private boolean isValidSearch(){
-        try{
-            if(startingDateSearch.getValue() == null || endingDateSearch.getValue() == null ||endingDateSearch.getValue().isBefore(startingDateSearch.getValue())){
-                throw new IllegalArgumentException("Illegal values entered");
-            }
-        } catch (IllegalArgumentException ex) {
-            System.out.println("CAUGHT");
+        if(startingDateSearch.getValue() == null || endingDateSearch.getValue() == null ||endingDateSearch.getValue().isBefore(startingDateSearch.getValue())){
             return false;
+        } else {
+            searchFieldError.setText("");
+            return true;
         }
-        return true;
     }
     private boolean isValidEntry(){
+
         try {
             if(Double.parseDouble(weightEntry.getText()) < 0 ||  dateEntry.getValue() == null){
                 throw new IllegalArgumentException("Illegal values entered");
             }
         } catch(IllegalArgumentException ex) {
+            entryFieldError.setText("Invalid data entered");
             return false;
         }
+        searchFieldError.setText("");
         return true;
+    }
+    private boolean isValidRemoval(){
+        if(dateRemovalField.getValue() == null){
+            return false;
+        } else {
+            return true;
+        }
     }
 }
