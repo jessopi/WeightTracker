@@ -48,7 +48,7 @@ public class WeightTrackerController {
     @FXML
     private Button removeByDateButton;
     @FXML
-    private ListView additionaList;
+    private ListView additionaldata;
 
     private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
 
@@ -129,8 +129,8 @@ public class WeightTrackerController {
         }
     }
     private void updateAdditionalInfo(){
-        additionaList.setStyle("-fx-font-size: 1.8em ;");
+        additionaldata.setStyle("-fx-font-size: 1.8em ;");
         ObservableList<String> thing = FXCollections.observableList(weightTrackerModel.getAdditionalInfo());
-        additionaList.setItems(thing);
+        additionaldata.setItems(thing);
     }
 }
