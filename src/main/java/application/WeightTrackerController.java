@@ -48,7 +48,7 @@ public class WeightTrackerController {
     @FXML
     private Button removeByDateButton;
     @FXML
-    private ListView additionaList;
+    private ListView additionaldata;
 
     private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
 
@@ -56,7 +56,7 @@ public class WeightTrackerController {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
 
-
+        clearButtonErrors();
         if (id.equals(addButton.getId())) {
             if (isValidEntry()) {
                 weightTrackerModel.insertNewData(dateEntry.getValue().toString(), Double.parseDouble(weightEntry.getText()));
@@ -116,7 +116,7 @@ public class WeightTrackerController {
             entryFieldError.setText("Invalid Input Entry");
             return false;
         }
-        searchFieldError.setText("");
+        entryFieldError.setText("");
         return true;
     }
     private boolean isValidRemoval(){
@@ -129,8 +129,13 @@ public class WeightTrackerController {
         }
     }
     private void updateAdditionalInfo(){
-        additionaList.setStyle("-fx-font-size: 1.8em ;");
+        additionaldata.setStyle("-fx-font-size: 1.8em ;");
         ObservableList<String> thing = FXCollections.observableList(weightTrackerModel.getAdditionalInfo());
-        additionaList.setItems(thing);
+        additionaldata.setItems(thing);
+    }
+    private void clearButtonErrors(){
+        entryFieldError.setText("");
+        removalFieldError.setText("");
+        searchFieldError.setText("");
     }
 }

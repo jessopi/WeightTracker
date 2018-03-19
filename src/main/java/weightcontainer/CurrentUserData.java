@@ -29,7 +29,7 @@ public class CurrentUserData {
 
     public String getSearchRange(){
         if(this.weightDataArrayList.isEmpty()){
-            return "";
+            return "N/A";
         }
         String output;
         output = weightDataArrayList.get(0).getDate() + " - " + weightDataArrayList.get(weightDataArrayList.size() - 1).getDate();
@@ -44,6 +44,9 @@ public class CurrentUserData {
     }
 
     public double getMin(){
+        if(this.weightDataArrayList.isEmpty()){
+            return 0.0;
+        }
         double imin = Integer.MAX_VALUE;
         for(WeightData item : this.weightDataArrayList){
             imin = Math.min(imin,item.getWeight());
@@ -53,6 +56,9 @@ public class CurrentUserData {
 
     public double getAverage(){
         double sum = 0;
+        if(this.weightDataArrayList.isEmpty()){
+            return sum;
+        }
         for(WeightData item : weightDataArrayList){
             sum+=item.getWeight();
         }
