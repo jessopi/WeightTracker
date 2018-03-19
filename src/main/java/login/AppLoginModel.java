@@ -1,6 +1,6 @@
-package Login;
+package main.java.login;
 
-import dbUtility.DbConnection;
+import main.java.dbutility.DbConnection;
 import org.mindrot.BCrypt;
 
 import java.sql.Connection;
@@ -8,10 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginModel {
+public class AppLoginModel {
     private Connection connection;
 
-    public LoginModel(){
+    public AppLoginModel(){
         try{
             this.connection = DbConnection.getConnection();
         } catch (SQLException ex) {
