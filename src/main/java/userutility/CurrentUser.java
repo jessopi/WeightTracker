@@ -1,6 +1,6 @@
-package userUtility;
+package main.java.userutility;
 
-public class UserInfo {
+public class CurrentUser {
     private static String currentUser = "";
 
     public static void setCurrentUser(String user){

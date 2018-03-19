@@ -1,6 +1,5 @@
-package Main;
-
-public class WeightData {
+package main.java.weightcontainer;
+public class WeightData  {
 
     private String date;
     private Double weight;
@@ -23,4 +22,6 @@ public class WeightData {
     public String toString() {
         return date + " - " + weight + "lbs.";
     }
+
+
 }

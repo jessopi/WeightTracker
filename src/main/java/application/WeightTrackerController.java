@@ -1,11 +1,14 @@
-package Main;
+package main.java.application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import main.java.weightcontainer.WeightData;
 
 public class WeightTrackerController {
 
@@ -44,13 +47,10 @@ public class WeightTrackerController {
     private Button removeAllButton;
     @FXML
     private Button removeByDateButton;
+    @FXML
+    private ListView additionaList;
 
     private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
-    /*
-            things to do:
-                Add information on additional tab - info about current set of data
-                class to calculate data
-     */
 
     public void click(ActionEvent event) {
         Button btn = (Button) event.getSource();
@@ -66,6 +66,7 @@ public class WeightTrackerController {
                 this.weightTrackerModel.setSearchRange(this.startingDateSearch.getValue().toString(),this.endingDateSearch.getValue().toString());
                 updateTable();
                 updateLineChart();
+                updateAdditionalInfo();
             }
         } else if (id.equals(removeByDateButton.getId())) {
             if(isValidRemoval()){
@@ -75,6 +76,7 @@ public class WeightTrackerController {
             this.weightTrackerModel.setSearchRange("","");
             updateTable();
             updateLineChart();
+            updateAdditionalInfo();
         } else if (id.equals(removeAllButton.getId())){
             //questionable if this should be added
             this.weightTrackerModel.removeData("");
@@ -125,5 +127,10 @@ public class WeightTrackerController {
             removalFieldError.setText("");
             return true;
         }
+    }
+    private void updateAdditionalInfo(){
+        additionaList.setStyle("-fx-font-size: 1.8em ;");
+        ObservableList<String> thing = FXCollections.observableList(weightTrackerModel.getAdditionalInfo());
+        additionaList.setItems(thing);
     }
 }

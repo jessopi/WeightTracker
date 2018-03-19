@@ -1,4 +1,4 @@
-package dbUtility;
+package main.java.dbutility;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package Login;
+package main.java.login;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,9 +7,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import userUtility.UserInfo;
+import main.java.userutility.CurrentUser;
 
-public class LoginController {
+public class AppLoginController {
 
     @FXML
     private Label infoLabel;
@@ -22,7 +22,7 @@ public class LoginController {
     @FXML
     private Button createButton;
 
-    private LoginModel loginModel = new LoginModel();
+    private AppLoginModel appLoginModel = new AppLoginModel();
     public void click(javafx.event.ActionEvent event) {
        Button btn = (Button)event.getSource();
        String id = btn.getId();
@@ -32,8 +32,8 @@ public class LoginController {
        }
 
        if(id.equals(this.loginButton.getId())){
-           if(this.loginModel.searchForUser(this.usernameField.getText(),this.passwordField.getText())){
-               UserInfo.setCurrentUser(this.usernameField.getText().trim().toLowerCase());
+           if(this.appLoginModel.searchForUser(this.usernameField.getText(),this.passwordField.getText())){
+               CurrentUser.setCurrentUser(this.usernameField.getText().trim().toLowerCase());
                Stage stage = (Stage)this.infoLabel.getScene().getWindow();
                stage.close();
                login();
@@ -41,8 +41,8 @@ public class LoginController {
                infoLabel.setText("Invalid username or password.");
            }
        } else if (id.equals(this.createButton.getId())){
-           if(!this.loginModel.searchForUser(this.usernameField.getText())){
-               this.loginModel.createAccount(this.usernameField.getText(),this.passwordField.getText());
+           if(!this.appLoginModel.searchForUser(this.usernameField.getText())){
+               this.appLoginModel.createAccount(this.usernameField.getText(),this.passwordField.getText());
                infoLabel.setText("           Account created.");
            } else {
                infoLabel.setText("    Username already exists.");
@@ -54,7 +54,7 @@ public class LoginController {
         try{
             Stage weightTracker = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Pane root = loader.load(getClass().getResource("/Main/WeightTracker.fxml"));
+            Pane root = loader.load(getClass().getResource("/main/java/application/WeightTracker.fxml"));
             Scene scene = new Scene(root);
             weightTracker.setScene(scene);
             weightTracker.setTitle("Weight Tracker Application");
