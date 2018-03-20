@@ -8,17 +8,16 @@ Libraries
 
 Requirements
 -------
-- Java 8 installed
+- Java 8
 - sqlite-jdbc - Include jar in project structure.
 - JBcrypt - Compile into jar and include in project structure.
 
 Features
 -------
-- Ability to login and create accounts.
-- Uses jCrypt to hash passwords for password security.
-- Ability search specific date ranges for displaying data. 
-- Weight and date stored into database for individual user.
-- Allows ability to remove specific or all data according to user.
+- Ability to login and create new accounts.
+- Uses jCrypt to hash passwords for password security. 
+- Search specific date ranges for weight information. 
+- Entered information stored into dataabse for each user.
 
 Screenshots
 -------
