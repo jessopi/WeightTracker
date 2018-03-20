@@ -17,7 +17,7 @@ Features
 - Ability to login and create new accounts.
 - Uses jCrypt to hash passwords for password security. 
 - Search specific date ranges for weight information. 
-- Entered information stored into dataabse for each user.
+- Weight information stored into database for each user.
 
 Screenshots
 -------
