@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+/*
+    Holds all data received from previously executed sql search query.
+    Contains a list of WeightData objects and performs operations on them.
+*/
 public class CurrentUserData {
     private List<WeightData> weightDataArrayList;
 
@@ -64,6 +68,8 @@ public class CurrentUserData {
         }
         return sum/this.numberOfEntries();
     }
+
+    //returns largest change in weight
     public double getLargestFluctuation(){
         double fluct = 0;
         for(int i = 0; i < this.weightDataArrayList.size() - 1;i++){

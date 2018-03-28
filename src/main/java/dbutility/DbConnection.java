@@ -4,9 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/*
+    Creates a database connection with the embedded sqlite database in package resources.
+*/
 public class DbConnection {
-
-    //private static final String SQCONN = "jdbc:sqlite:src/main/resources/trackWeight.sqlite";
 
     public static Connection getConnection() throws SQLException {
 

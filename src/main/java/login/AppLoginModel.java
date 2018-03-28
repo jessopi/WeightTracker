@@ -8,6 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*
+    Model for Login application
+    Handles queries for login and account creation
+ */
 public class AppLoginModel {
     private Connection connection;
 
@@ -22,7 +26,9 @@ public class AppLoginModel {
         }
     }
 
+    //Adds new Username & encrypted password to login table in database
     public void createAccount(String username,String password){
+        //Encrypts password using generated salt provided by BCrpyt
         String hashed = BCrypt.hashpw(password,BCrypt.gensalt());
         PreparedStatement statement = null;
         try{
@@ -37,6 +43,8 @@ public class AppLoginModel {
             try{statement.close(); } catch (SQLException e) {}
            }
     }
+
+    //Given a username searches if that user exists in the table if so return true
     public boolean searchForUser(String username)  {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -57,6 +65,7 @@ public class AppLoginModel {
         }
     }
 
+    //Given a username and password check that both match the stored username and password if so return true
     public boolean searchForUser(String username, String password)  {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

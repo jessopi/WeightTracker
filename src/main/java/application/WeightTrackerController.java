@@ -10,8 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.java.weightcontainer.WeightData;
 
-public class WeightTrackerController {
+/*
+    Controller class for the main weightTracker Application
+    Handles events when buttons are clicked.
+    Such as search,remove, and load all.
 
+*/
+public class WeightTrackerController {
 
     @FXML
     private TextField weightEntry;
@@ -52,6 +57,7 @@ public class WeightTrackerController {
 
     private WeightTrackerModel weightTrackerModel = new WeightTrackerModel();
 
+    //Click event function
     public void click(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String id = btn.getId();
@@ -83,11 +89,14 @@ public class WeightTrackerController {
         }
     }
 
+    //updates the data used table when a new search range is entered
     private void updateTable(){
         this.dateCol.setCellValueFactory(new PropertyValueFactory<>("Date"));
         this.weightCol.setCellValueFactory(new PropertyValueFactory<>("weight"));
         this.dataTable.setItems(this.weightTrackerModel.getWeightDataList());
     }
+
+    //updates the line graph when a new search range is entered
     private void updateLineChart(){
         this.weightChart.getData().clear();
         XYChart.Series series = new XYChart.Series();
@@ -97,8 +106,9 @@ public class WeightTrackerController {
         this.weightChart.getData().add(series);
     }
 
+    //Checks if datepicker boxes are not null and that the starting date is before the ending date
     private boolean isValidSearch(){
-        if(startingDateSearch.getValue() == null || endingDateSearch.getValue() == null ||endingDateSearch.getValue().isBefore(startingDateSearch.getValue())){
+        if(startingDateSearch.getValue() == null || endingDateSearch.getValue() == null || endingDateSearch.getValue().isBefore(startingDateSearch.getValue())){
             searchFieldError.setText("Invalid Search Entry");
             return false;
         } else {
@@ -106,6 +116,8 @@ public class WeightTrackerController {
             return true;
         }
     }
+
+    //Checks if textfields are null or a nonvalid argument.
     private boolean isValidEntry(){
 
         try {
@@ -128,11 +140,15 @@ public class WeightTrackerController {
             return true;
         }
     }
+
+    //updates the 3rd tab that contains additional info on the search range.
     private void updateAdditionalInfo(){
         additionaldata.setStyle("-fx-font-size: 1.8em ;");
         ObservableList<String> thing = FXCollections.observableList(weightTrackerModel.getAdditionalInfo());
         additionaldata.setItems(thing);
     }
+
+    //clears button label errors
     private void clearButtonErrors(){
         entryFieldError.setText("");
         removalFieldError.setText("");
