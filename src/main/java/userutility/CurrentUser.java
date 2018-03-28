@@ -1,5 +1,9 @@
 package main.java.userutility;
 
+/*
+    Contains current active user.
+    Grabs username when login is successful.
+*/
 public class CurrentUser {
     private static String currentUser = "";
 

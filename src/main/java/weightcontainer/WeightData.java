@@ -1,4 +1,9 @@
 package main.java.weightcontainer;
+
+
+/*
+    Class that contains a date and weight pair.
+*/
 public class WeightData  {
 
     private String date;

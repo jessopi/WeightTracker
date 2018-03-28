@@ -14,11 +14,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Model class for the main weightTracker application
+    Handles sql queries called from controller class.
+ */
 public class WeightTrackerModel {
 
     private Connection connection;
     private CurrentUserData currentUserData;
 
+    //Attempts to establish a connection to database
     public WeightTrackerModel(){
       try{
           this.connection = DbConnection.getConnection();
@@ -31,7 +36,8 @@ public class WeightTrackerModel {
       currentUserData = new CurrentUserData();
     }
 
-
+    //Depending if parameter is an empty string or a date, function queries the database and removes
+    //all values of current user or just the specific date specified.
     public void removeData(String removalDate){
         PreparedStatement stmt = null;
         Connection conn = null;
@@ -59,6 +65,8 @@ public class WeightTrackerModel {
         }
     }
 
+    //If passed in strings are empty then loads all data of that current user else
+    //loads data that falls into the range specified.
     public void setSearchRange(String startingDate,String endingDate){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -93,6 +101,7 @@ public class WeightTrackerModel {
         }
     }
 
+    //Inserts a new date and weight into the database.
     public void insertNewData(String date, Double weight){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -111,11 +120,13 @@ public class WeightTrackerModel {
       }
     }
 
+    //returns ObservableList used to populate linegraph and table.
     public ObservableList<WeightData> getWeightDataList() {
         ObservableList<WeightData> observableList = FXCollections.observableList(this.currentUserData.getWeightDataArrayList());
         return observableList;
     }
 
+    //returns list of information based on data range
     public List<String> getAdditionalInfo(){
 
         List<String> info = new ArrayList<>();

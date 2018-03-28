@@ -6,7 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+/*
+    Main function for the application, creates the first window with title.
+*/
 public class AppLogin extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{

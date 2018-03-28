@@ -8,7 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import main.java.userutility.CurrentUser;
-
+/*
+    Controller class for login application
+    Handles event when login || create is clicked
+    validates inputs
+ */
 public class AppLoginController {
 
     @FXML
@@ -26,6 +30,8 @@ public class AppLoginController {
     public void click(javafx.event.ActionEvent event) {
        Button btn = (Button)event.getSource();
        String id = btn.getId();
+
+       //exits function if empty textfield and sets error label.
        if(this.usernameField.getText().isEmpty() || this.passwordField.getText().isEmpty()){
            this.infoLabel.setText("             Empty textfield.");
            return;
@@ -33,6 +39,7 @@ public class AppLoginController {
 
        if(id.equals(this.loginButton.getId())){
            if(this.appLoginModel.searchForUser(this.usernameField.getText(),this.passwordField.getText())){
+               //grabs current user that logged in.
                CurrentUser.setCurrentUser(this.usernameField.getText().trim().toLowerCase());
                Stage stage = (Stage)this.infoLabel.getScene().getWindow();
                stage.close();
@@ -50,6 +57,7 @@ public class AppLoginController {
        }
     }
 
+    //creates a new stage using weightTracker.fxml and loads it.
     private void login(){
         try{
             Stage weightTracker = new Stage();
